@@ -1,10 +1,28 @@
-node_modules/
-target/
-.DS_Store
-bin/
-obj/
+# Virtual environments
+venv/
+env/
+.env
+.venv
+ENV/
+
+# Python cache
 __pycache__/
-.vs/
-.idea/
-package-lock.json
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+.coverage
+
+# IDE files
 .vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Dependencies
+node_modules/
