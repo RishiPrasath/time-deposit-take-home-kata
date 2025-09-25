@@ -15,19 +15,66 @@ async def root():
     return {"message": "Time Deposit API is running!"}
 
 # Our two required endpoints (placeholder for now)
-@app.put("/time-deposits/balances")
+@app.put("/time-deposits/updateBalances")
 async def update_all_balances():
     """Update balances for ALL time deposits in database"""
     try:
-        # Test database connection
         conn = get_database_connection()
         cursor = conn.cursor()
-        cursor.execute("SELECT COUNT(*) FROM timeDeposits")
-        count = cursor.fetchone()[0]
+        
+        # Fetch all deposits from database
+        cursor.execute("SELECT id, planType, balance, days FROM timeDeposits ORDER BY id")
+        deposits = cursor.fetchall()
+        
+        updated_count = 0
+        
+        for deposit in deposits:
+            deposit_id, plan_type, current_balance, days = deposit
+            
+            # Calculate interest based on business rules
+            interest = 0
+            
+            # No interest for first 30 days on ALL plans
+            if days > 30:
+                if plan_type == 'student':
+                    # Student: 3% monthly interest (after 30 days, stops after 1 year)
+                    if days < 366:  # Less than 1 year
+                        interest = (current_balance * 0.03) / 12
+                elif plan_type == 'premium':
+                    # Premium: 5% monthly interest (starts after 45 days)
+                    if days > 45:
+                        interest = (current_balance * 0.05) / 12
+                elif plan_type == 'basic':
+                    # Basic: 1% monthly interest (after 30 days)
+                    interest = (current_balance * 0.01) / 12
+            
+            # Calculate new balance
+            new_balance = round(current_balance + interest, 2)
+            
+            # Update the database with new balance
+            cursor.execute("""
+                UPDATE timeDeposits 
+                SET balance = ? 
+                WHERE id = ?
+            """, (new_balance, deposit_id))
+            
+            updated_count += 1
+        
+        # Commit all changes
+        conn.commit()
         conn.close()
         
-        return {"message": "Update balances endpoint - TODO", "updatedCount": count}
+        return {
+            "message": "All time deposit balances updated successfully",
+            "updatedCount": updated_count,
+            "status": "success"
+        }
+        
     except Exception as e:
+        # Rollback in case of error
+        if 'conn' in locals():
+            conn.rollback()
+            conn.close()
         raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
 
 @app.get("/time-deposits")
