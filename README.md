@@ -1,61 +1,97 @@
-# Time Deposit Refactoring Kata - Take home assignment
-## XA bank time deposit
+# Time Deposit API - Refactoring Kata Solution
 
-## Context
-A junior developer implemented some domain logic in a time deposit system but did not complete the API functionality. Your task is to refactor the existing codebase to implement all required functionalities based on the provided business requirements, ensuring no breaking changes occur.
+A RESTful API for managing time deposits with automated interest calculations, built using Clean Architecture principles.
 
-## Requirements
+## 🛠️ Tech Stack
 
-1. **API Endpoint**:
-  - Create a Restful API endpoint for updating the balances of all time deposits in the database.
-  - Create a Restful API endpoint to get all time deposits.
-    - Get API should return a list of all time deposits with this schema:
-      - id
-      - planType
-      - balance
-      - days
-      - withdrawals
-  - Choose any API framework you prefer.
+- **FastAPI** - Python web framework for building APIs
+- **PostgreSQL** - Relational database
+- **Docker & Docker Compose** - Containerization and orchestration
+- **SQLAlchemy** - ORM for database operations
 
-2. **Database Setup**:
-  - Store all time deposit plans in a database.
-  - Define the following tables:
-    - `timeDeposits`:
-      - `id`: Integer (primary key)
-      - `planType`: String (required)
-      - `days`: Integer (required)
-      - `balance`: Decimal (required)
-    - `withdrawals`:
-      - `id`: Integer (primary key)
-      - `timeDepositId`: Integer (Foreign Key, required)
-      - `amount`: Decimal (required)
-      - `date`: Date (required)
+## 📋 Features
 
-3. **Interest Calculation**:
-  - Implement logic to calculate monthly interest based on the plan type:
-    - **Basic plan**: 1% interest
-    - **Student plan**: 3% interest (no interest after 1 year)
-    - **Premium plan**: 5% interest (interest starts after 45 days)
-  - No interest for the first 30 days for all plans.
+### API Endpoints
 
-4. **Refactoring Constraints**:
-  - Do not introduce breaking changes to the shared `TimeDeposit` class or modify the `updateBalance` method signature.
-  - Ensure your design is extensible to accommodate future complexities in interest calculations.
+1. **GET /time-deposits**
+   - Returns all time deposits with their associated withdrawals
+   - Response includes: id, planType, balance, days, and withdrawals array
 
-5. **Code Quality**:
-  - Adhere to SOLID principles, design patterns, and clean code practices where applicable.
+2. **PUT /time-deposits/updateBalances**
+   - Updates balances for all time deposits based on interest calculations
+   - Interest rates:
+     - Basic Plan: 1% monthly
+     - Student Plan: 3% monthly (stops after 1 year)
+     - Premium Plan: 5% monthly (starts after 45 days)
+   - No interest for first 30 days on all plans
 
-## Important Guidelines
-- The existing `TimeDepositCalculator.updateBalance` method is functioning correctly. After refactoring, ensure that the behavior of this method remains unchanged.
-- Your final solution should include **two API endpoints**. Do not develop additional endpoints.
-- **Do not** create a pull request or a new branch in the ikigai-digital repository. Instead, fork this repository into your own GitHub repository and develop the solution there.
-- No need to handle invalid input / exceptions.
+## 🚀 Quick Start
 
-## Bonus
-- Embrace Hexagonal Architecture, Clean Architecture, or any other architectural patterns that you find suitable.
-- Atomic commits
-- Test containers
+### Using Docker (Recommended)
 
-## Submission Instructions
-- Include clear instructions on how to run the application.
-- Email the link to your public GitHub repository.
+```bash
+# Clone the repository
+git clone https://github.com/RishiPrasath/time-deposit-take-home-kata.git
+cd time-deposit-take-home-kata/solution_codebase/fastapi
+
+# Start the application
+docker-compose up -d
+
+# The API is now running at http://localhost:8000
+# API Documentation available at http://localhost:8000/docs
+```
+
+### Using Helper Scripts
+
+**Windows:**
+```cmd
+cd solution_codebase\fastapi
+scripts\windows\start-docker.cmd
+```
+
+**Linux/Mac:**
+```bash
+cd solution_codebase/fastapi
+chmod +x scripts/linux/*.sh
+./scripts/linux/start-docker.sh
+```
+
+## 📝 API Documentation
+
+Once running, access the interactive API documentation:
+- Swagger UI: http://localhost:8000/docs
+- ReDoc: http://localhost:8000/redoc
+
+## 🧪 Testing
+
+```bash
+# Run tests in Docker
+docker-compose exec web pytest tests/ -v
+
+# Stop the application
+docker-compose down
+```
+
+## 📁 Project Structure
+
+```
+solution_codebase/fastapi/
+├── src/                # Application source code
+├── tests/              # Test suite
+├── scripts/            # Helper scripts for Windows/Linux
+├── docker-compose.yml  # Docker orchestration
+└── requirements.txt    # Python dependencies
+```
+
+## 📄 Requirements Met
+
+- ✅ Two RESTful API endpoints implemented
+- ✅ PostgreSQL database with required schema
+- ✅ Interest calculation logic per plan type
+- ✅ No breaking changes to existing code
+- ✅ Clean Architecture implementation
+- ✅ Fully containerized with Docker
+
+## Author
+
+**Rishi Prasath** - [GitHub](https://github.com/RishiPrasath)
