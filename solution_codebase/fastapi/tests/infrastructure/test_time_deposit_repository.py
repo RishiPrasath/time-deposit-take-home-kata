@@ -9,8 +9,8 @@ import pytest
 from decimal import Decimal
 from datetime import date
 
-from app.infrastructure.database.repositories.time_deposit_repository import TimeDepositRepository
-from app.infrastructure.database.models import TimeDepositModel, WithdrawalModel
+from src.infrastructure.database.repositories.time_deposit_repository import TimeDepositRepository
+from src.infrastructure.database.models import TimeDepositModel, WithdrawalModel
 
 
 class TestTimeDepositRepository:

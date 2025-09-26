@@ -4,10 +4,10 @@ from sqlalchemy.orm import sessionmaker
 from decimal import Decimal
 from datetime import date
 
-from app.infrastructure.database.models import Base, TimeDepositModel, WithdrawalModel
-from app.infrastructure.database.repositories.time_deposit_repository import TimeDepositRepository
-from app.infrastructure.adapters.time_deposit_repository_adapter import TimeDepositRepositoryAdapter
-from app.application.services.time_deposit_service import TimeDepositService
+from src.infrastructure.database.models import Base, TimeDepositModel, WithdrawalModel
+from src.infrastructure.database.repositories.time_deposit_repository import TimeDepositRepository
+from src.infrastructure.adapters.time_deposit_repository_adapter import TimeDepositRepositoryAdapter
+from src.application.services.time_deposit_service import TimeDepositService
 
 class TestServiceIntegration:
 

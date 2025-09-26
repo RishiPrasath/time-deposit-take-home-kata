@@ -10,11 +10,11 @@ This is THE KEY to preserving existing business logic while adding database pers
 from typing import List
 from decimal import Decimal
 
-from app.domain.interfaces.repositories import TimeDepositRepositoryInterface
-from app.domain.entities.time_deposit import TimeDeposit
-from app.domain.entities.withdrawal import Withdrawal
-from app.infrastructure.database.repositories.time_deposit_repository import TimeDepositRepository
-from app.infrastructure.database.models import TimeDepositModel, WithdrawalModel
+from src.domain.interfaces.repositories import TimeDepositRepositoryInterface
+from src.domain.entities.time_deposit import TimeDeposit
+from src.domain.entities.withdrawal import Withdrawal
+from src.infrastructure.database.repositories.time_deposit_repository import TimeDepositRepository
+from src.infrastructure.database.models import TimeDepositModel, WithdrawalModel
 
 
 class TimeDepositRepositoryAdapter(TimeDepositRepositoryInterface):

@@ -3,7 +3,7 @@ Abstract repository interface for dependency inversion
 """
 from abc import ABC, abstractmethod
 from typing import List
-from app.domain.entities.time_deposit import TimeDeposit
+from src.domain.entities.time_deposit import TimeDeposit
 
 
 class TimeDepositRepositoryInterface(ABC):

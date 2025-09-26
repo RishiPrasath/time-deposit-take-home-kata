@@ -3,10 +3,10 @@ from datetime import datetime, timezone
 from decimal import Decimal
 import logging
 
-from app.domain.entities.time_deposit import TimeDepositCalculator
-from app.domain.interfaces.repositories import TimeDepositRepositoryInterface
-from app.application.schemas.time_deposit import TimeDepositResponse, WithdrawalResponse, UpdateBalancesResponse
-from app.application.exceptions.service_exceptions import ServiceException
+from src.domain.entities.time_deposit import TimeDepositCalculator
+from src.domain.interfaces.repositories import TimeDepositRepositoryInterface
+from src.application.schemas.time_deposit import TimeDepositResponse, WithdrawalResponse, UpdateBalancesResponse
+from src.application.exceptions.service_exceptions import ServiceException
 
 logger = logging.getLogger(__name__)
 

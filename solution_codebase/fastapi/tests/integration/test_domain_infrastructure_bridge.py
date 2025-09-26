@@ -12,10 +12,10 @@ from decimal import Decimal
 from datetime import date
 from unittest.mock import Mock, MagicMock
 
-from app.domain.entities.time_deposit import TimeDeposit, TimeDepositCalculator
-from app.domain.entities.withdrawal import Withdrawal
-from app.infrastructure.database.models import TimeDepositModel, WithdrawalModel
-from app.infrastructure.adapters.time_deposit_repository_adapter import TimeDepositRepositoryAdapter
+from src.domain.entities.time_deposit import TimeDeposit, TimeDepositCalculator
+from src.domain.entities.withdrawal import Withdrawal
+from src.infrastructure.database.models import TimeDepositModel, WithdrawalModel
+from src.infrastructure.adapters.time_deposit_repository_adapter import TimeDepositRepositoryAdapter
 
 
 class TestModelToDomainConversion:

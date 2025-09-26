@@ -5,7 +5,7 @@ These tests ensure that the domain layer preserves the EXACT behavior
 of the original TimeDepositCalculator, including the unusual cumulative interest behavior.
 """
 import pytest
-from app.domain.entities.time_deposit import TimeDeposit, TimeDepositCalculator
+from src.domain.entities.time_deposit import TimeDeposit, TimeDepositCalculator
 
 
 def test_exact_original_behavior_basic():

@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Numeric, Date, ForeignKey, CheckConstraint
 from sqlalchemy.orm import relationship
-from app.infrastructure.database.connection import Base
+from src.infrastructure.database.connection import Base
 
 
 class TimeDepositModel(Base):

@@ -6,16 +6,11 @@ Comprehensive validation of Domain Layer implementation
 This script validates that Phase 2 (Domain Layer) has been successfully
 implemented and integrated with Phase 1 (Infrastructure Layer).
 """
-import sys
-import os
 
-# Add project root to Python path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
-
-from app.domain.entities.time_deposit import TimeDeposit, TimeDepositCalculator
-from app.domain.entities.withdrawal import Withdrawal
-from app.domain.interfaces.repositories import TimeDepositRepositoryInterface
-from app.infrastructure.adapters.time_deposit_repository_adapter import TimeDepositRepositoryAdapter
+from src.domain.entities.time_deposit import TimeDeposit, TimeDepositCalculator
+from src.domain.entities.withdrawal import Withdrawal
+from src.domain.interfaces.repositories import TimeDepositRepositoryInterface
+from src.infrastructure.adapters.time_deposit_repository_adapter import TimeDepositRepositoryAdapter
 from decimal import Decimal
 
 

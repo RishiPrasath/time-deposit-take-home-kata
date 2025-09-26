@@ -3,10 +3,10 @@ from unittest.mock import Mock, MagicMock
 from decimal import Decimal
 from datetime import date
 
-from app.domain.entities.time_deposit import TimeDeposit
-from app.domain.entities.withdrawal import Withdrawal
-from app.application.services.time_deposit_service import TimeDepositService
-from app.application.schemas.time_deposit import UpdateBalancesResponse
+from src.domain.entities.time_deposit import TimeDeposit
+from src.domain.entities.withdrawal import Withdrawal
+from src.application.services.time_deposit_service import TimeDepositService
+from src.application.schemas.time_deposit import UpdateBalancesResponse
 
 class TestTimeDepositService:
 

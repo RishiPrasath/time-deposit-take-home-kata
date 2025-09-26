@@ -2,10 +2,10 @@ from typing import Generator
 from sqlalchemy.orm import Session
 from fastapi import Depends
 
-from app.infrastructure.database.connection import get_db
-from app.infrastructure.database.repositories.time_deposit_repository import TimeDepositRepository
-from app.infrastructure.adapters.time_deposit_repository_adapter import TimeDepositRepositoryAdapter
-from app.application.services.time_deposit_service import TimeDepositService
+from src.infrastructure.database.connection import get_db
+from src.infrastructure.database.repositories.time_deposit_repository import TimeDepositRepository
+from src.infrastructure.adapters.time_deposit_repository_adapter import TimeDepositRepositoryAdapter
+from src.application.services.time_deposit_service import TimeDepositService
 
 def get_time_deposit_service(db: Session = Depends(get_db)) -> TimeDepositService:
     """

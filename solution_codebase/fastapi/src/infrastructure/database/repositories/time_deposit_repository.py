@@ -4,7 +4,7 @@ from decimal import Decimal
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy.exc import SQLAlchemyError
 
-from app.infrastructure.database.models import TimeDepositModel, WithdrawalModel
+from src.infrastructure.database.models import TimeDepositModel, WithdrawalModel
 
 
 class TimeDepositRepository:

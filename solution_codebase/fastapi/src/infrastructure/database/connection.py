@@ -2,16 +2,25 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker, Session
 from typing import Generator
 
-from app.infrastructure.config.settings import settings
+from src.infrastructure.config.settings import settings
 
-# Create database engine
-engine = create_engine(
-    settings.DATABASE_URL,
-    pool_pre_ping=True,
-    pool_size=10,
-    max_overflow=20,
-    echo=settings.DEBUG  # Log SQL statements in debug mode
-)
+# Create database engine with SQLite compatibility
+if "sqlite" in settings.DATABASE_URL:
+    # SQLite specific settings
+    engine = create_engine(
+        settings.DATABASE_URL,
+        connect_args={"check_same_thread": False},
+        echo=settings.DEBUG  # Log SQL statements in debug mode
+    )
+else:
+    # PostgreSQL settings
+    engine = create_engine(
+        settings.DATABASE_URL,
+        pool_pre_ping=True,
+        pool_size=10,
+        max_overflow=20,
+        echo=settings.DEBUG  # Log SQL statements in debug mode
+    )
 
 # Create session factory
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

@@ -9,7 +9,7 @@ from decimal import Decimal
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
-from app.infrastructure.database.models import Base, TimeDepositModel, WithdrawalModel
+from src.infrastructure.database.models import Base, TimeDepositModel, WithdrawalModel
 
 
 # Use in-memory SQLite for tests

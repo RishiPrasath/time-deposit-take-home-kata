@@ -14,7 +14,7 @@ class Settings(BaseSettings):
 
     # Database
     DATABASE_URL: str = Field(
-        default="postgresql://postgres:postgres@localhost:5432/timedeposit_db"
+        default="sqlite:///./time_deposits.db"
     )
     DATABASE_URL_TEST: str = Field(
         default="sqlite:///./test.db"
