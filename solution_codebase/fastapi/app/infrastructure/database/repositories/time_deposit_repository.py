@@ -102,6 +102,24 @@ class TimeDepositRepository:
             self.db.rollback()
             raise Exception(f"Failed to save time deposits: {str(e)}")
 
+    def save_all_models(self, models: List[TimeDepositModel]) -> None:
+        """
+        Save all models back to database
+
+        Used by adapter to persist domain entity changes
+
+        Args:
+            models: List of TimeDepositModel objects to save
+        """
+        try:
+            for model in models:
+                # Merge handles both updates and inserts
+                self.db.merge(model)
+            self.db.commit()
+        except SQLAlchemyError as e:
+            self.db.rollback()
+            raise Exception(f"Failed to save time deposit models: {str(e)}")
+
     def update_balance(self, deposit_id: int, new_balance: Decimal) -> None:
         """
         Update the balance of a specific time deposit.
