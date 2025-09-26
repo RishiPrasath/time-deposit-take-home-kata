@@ -1,0 +1,20 @@
+# Development override configuration
+# This file automatically overrides docker-compose.yml in development
+version: '3.8'
+
+services:
+  web:
+    build:
+      target: development
+    volumes:
+      - ./src:/app/src
+      - ./tests:/app/tests
+      - ./migrations:/app/migrations
+    environment:
+      ENV: development
+      RELOAD_FLAG: "--reload"
+    command: uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
+
+  postgres:
+    ports:
+      - "5433:5432"  # Different port to avoid conflicts with local postgres

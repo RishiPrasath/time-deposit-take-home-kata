@@ -1,0 +1,82 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.hypothesis/
+*.egg-info/
+dist/
+build/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Project specific
+*.db
+*.sqlite
+*.sqlite3
+test_api.db
+time_deposits.db
+
+# Environment files (use volume mounting instead)
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+logs/
+
+# Documentation
+*.md
+!README.md
+docs/
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.travis.yml
+
+# Testing
+tests/
+test_*.py
+*_test.py
+
+# Scripts (mount as needed)
+scripts/*.sh
+scripts/*.ps1
+
+# Docker files themselves
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+
+# OS files
+Thumbs.db
+Desktop.ini

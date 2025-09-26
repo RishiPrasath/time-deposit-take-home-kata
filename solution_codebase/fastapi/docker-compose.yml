@@ -2,38 +2,74 @@ version: '3.8'
 
 services:
   postgres:
-    image: postgres:14
+    image: postgres:14-alpine
     container_name: timedeposit_postgres
+    restart: unless-stopped
     environment:
-      POSTGRES_DB: timedeposit_db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ${DB_NAME:-timedeposit_db}
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
     ports:
-      - "5432:5432"
+      - "${DB_PORT:-5432}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./migrations:/docker-entrypoint-initdb.d
+      - ./migrations/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+      - ./scripts/seed_data.sql:/docker-entrypoint-initdb.d/02-seed.sql:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres}"]
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - timedeposit_network
 
   web:
-    build: .
+    build:
+      context: .
+      target: ${BUILD_TARGET:-production}
     container_name: timedeposit_api
+    restart: unless-stopped
     ports:
-      - "8000:8000"
+      - "${API_PORT:-8000}:8000"
     depends_on:
       postgres:
         condition: service_healthy
     environment:
-      DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/timedeposit_db"
+      DATABASE_URL: "postgresql://${DB_USER:-postgres}:${DB_PASSWORD:-postgres}@postgres:5432/${DB_NAME:-timedeposit_db}"
       PYTHONPATH: "/app"
+      ENV: ${ENV:-production}
+    networks:
+      - timedeposit_network
     volumes:
-      - ./app:/app/app
-      - ./tests:/app/tests
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+      # Only mount src in development mode
+      - ./src:/app/src:ro
+    command: >
+      sh -c "
+        echo 'Waiting for database...' &&
+        sleep 3 &&
+        uvicorn src.main:app --host 0.0.0.0 --port 8000 ${RELOAD_FLAG:---reload}
+      "
+
+  # Optional: Add nginx for production reverse proxy
+  nginx:
+    image: nginx:alpine
+    container_name: timedeposit_nginx
+    restart: unless-stopped
+    profiles:
+      - production
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - web
+    networks:
+      - timedeposit_network
+
+networks:
+  timedeposit_network:
+    driver: bridge
 
 volumes:
   postgres_data:
+    driver: local
